@@ -3,76 +3,735 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TravelPro helps you discover beaches, temples and cities around the world.">
+  <meta name="theme-color" content="#0b2545">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500..800&family=Plus+Jakarta+Sans:ital,wght@1,400..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <title>TravelPro</title>
 </head>
 <body>
-    <nav>
+  <!-- Icon set: colourful illustrated icons (ic-*) and a few simple UI glyphs (i-*) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="gGlobe" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6CC6FF"/><stop offset="1" stop-color="#1B63D6"/></linearGradient>
+      <linearGradient id="gPin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF7A6B"/><stop offset="1" stop-color="#E2352E"/></linearGradient>
+      <linearGradient id="gSuit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9466"/><stop offset="1" stop-color="#F25A3C"/></linearGradient>
+      <linearGradient id="gTag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFC24B"/><stop offset="1" stop-color="#FF8A2B"/></linearGradient>
+      <linearGradient id="gScreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5DB2FF"/><stop offset="1" stop-color="#2D6BF0"/></linearGradient>
+      <linearGradient id="gCheck" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3DD598"/><stop offset="1" stop-color="#16A36C"/></linearGradient>
+      <clipPath id="cFlag"><rect x="4" y="10" width="40" height="28" rx="5"/></clipPath>
+      <clipPath id="cGlobe"><circle cx="24" cy="24" r="20"/></clipPath>
+    </defs>
+
+    <symbol id="ic-beach" viewBox="0 0 48 48">
+      <circle cx="39" cy="9" r="5" fill="#FFC53D"/>
+      <path d="M0 42c9-5 19-7 26-6 8 1 15 3 22 7v5H0z" fill="#F5CF86"/>
+      <path d="M0 45c9-3 19-4 26-3.5 8 .6 15 2 22 4.5V48H0z" fill="#E7B260"/>
+      <path d="M21 17l4 24" stroke="#7A4E2D" stroke-width="2.6" stroke-linecap="round"/>
+      <g transform="rotate(-10 21 18)">
+        <path d="M21 5Q7 7 4 19q6-3 11.3 0Q16 10 21 5z" fill="#FF5A4E"/>
+        <path d="M21 5q-5 5-5.7 14q5.7-3 11.4 0Q26 10 21 5z" fill="#FFE9DC"/>
+        <path d="M21 5q14 2 17 14q-6-3-11.3 0Q26 10 21 5z" fill="#FF5A4E"/>
+        <circle cx="21" cy="5" r="1.6" fill="#7A4E2D"/>
+      </g>
+    </symbol>
+
+    <symbol id="ic-temple" viewBox="0 0 48 48">
+      <rect x="22.8" y="1.5" width="2.4" height="6" rx="1" fill="#E7A92B"/>
+      <circle cx="24" cy="2.5" r="1.8" fill="#FFC53D"/>
+      <rect x="18" y="10.5" width="12" height="7" fill="#F6E7C8"/>
+      <rect x="16" y="20.5" width="16" height="7.5" fill="#F6E7C8"/>
+      <rect x="13.5" y="31" width="21" height="9.5" fill="#F6E7C8"/>
+      <path d="M10.5 12Q24 8 37.5 12q-3-2.2-4.5-5H15q-1.5 2.8-4.5 5z" fill="#E2453C"/>
+      <path d="M7.5 22.5Q24 17.5 40.5 22.5q-3.5-2.4-5-5.5h-23q-1.5 3.1-5 5.5z" fill="#E2453C"/>
+      <path d="M4.5 33Q24 27.5 43.5 33q-4-2.6-5.5-6H10q-1.5 3.4-5.5 6z" fill="#E2453C"/>
+      <rect x="21" y="33.5" width="6" height="7" rx="3" fill="#8C4A2F"/>
+      <rect x="8" y="40.5" width="32" height="4.5" rx="1.5" fill="#9A5A3A"/>
+      <rect x="5" y="44.5" width="38" height="2.5" rx="1.2" fill="#7A4430"/>
+    </symbol>
+
+    <symbol id="ic-city" viewBox="0 0 48 48">
+      <circle cx="39" cy="9" r="5" fill="#FFC53D"/>
+      <rect x="5" y="20" width="11" height="24" rx="1.5" fill="#6E95FF"/>
+      <rect x="17" y="9" width="13" height="35" rx="1.5" fill="#2F57D9"/>
+      <rect x="22.6" y="3" width="1.8" height="7" fill="#2F57D9"/>
+      <rect x="31" y="24" width="12" height="20" rx="1.5" fill="#9DB7FF"/>
+      <g fill="#FFE7A3"><rect x="7.5" y="24" width="2.6" height="2.6" rx=".5"/><rect x="11.5" y="24" width="2.6" height="2.6" rx=".5"/><rect x="7.5" y="29" width="2.6" height="2.6" rx=".5"/><rect x="11.5" y="29" width="2.6" height="2.6" rx=".5"/><rect x="7.5" y="34" width="2.6" height="2.6" rx=".5"/><rect x="11.5" y="34" width="2.6" height="2.6" rx=".5"/><rect x="7.5" y="39" width="2.6" height="2.6" rx=".5"/><rect x="11.5" y="39" width="2.6" height="2.6" rx=".5"/><rect x="19.8" y="13" width="2.8" height="2.8" rx=".5"/><rect x="24.6" y="13" width="2.8" height="2.8" rx=".5"/><rect x="19.8" y="18" width="2.8" height="2.8" rx=".5"/><rect x="24.6" y="18" width="2.8" height="2.8" rx=".5"/><rect x="19.8" y="23" width="2.8" height="2.8" rx=".5"/><rect x="24.6" y="23" width="2.8" height="2.8" rx=".5"/><rect x="19.8" y="28" width="2.8" height="2.8" rx=".5"/><rect x="24.6" y="28" width="2.8" height="2.8" rx=".5"/><rect x="19.8" y="33" width="2.8" height="2.8" rx=".5"/><rect x="24.6" y="33" width="2.8" height="2.8" rx=".5"/><rect x="19.8" y="38" width="2.8" height="2.8" rx=".5"/><rect x="24.6" y="38" width="2.8" height="2.8" rx=".5"/><rect x="33.5" y="28" width="2.6" height="2.6" rx=".5"/><rect x="38" y="28" width="2.6" height="2.6" rx=".5"/><rect x="33.5" y="33" width="2.6" height="2.6" rx=".5"/><rect x="38" y="33" width="2.6" height="2.6" rx=".5"/><rect x="33.5" y="38" width="2.6" height="2.6" rx=".5"/><rect x="38" y="38" width="2.6" height="2.6" rx=".5"/></g>
+      <rect x="3" y="43" width="42" height="3" rx="1.5" fill="#1B2A5B"/>
+    </symbol>
+
+    <symbol id="ic-japan" viewBox="0 0 48 48">
+      <rect x="4" y="10" width="40" height="28" rx="5" fill="#FFFFFF"/>
+      <circle cx="24" cy="24" r="8" fill="#D7263D"/>
+      <rect x="4.5" y="10.5" width="39" height="27" rx="4.5" fill="none" stroke="#D3D9E5"/>
+    </symbol>
+
+    <symbol id="ic-italy" viewBox="0 0 48 48">
+      <g clip-path="url(#cFlag)">
+        <rect x="4" y="10" width="13.4" height="28" fill="#1F9D55"/>
+        <rect x="17.3" y="10" width="13.4" height="28" fill="#FFFFFF"/>
+        <rect x="30.6" y="10" width="13.4" height="28" fill="#E23B3B"/>
+        <path d="M4 10h40v9C30 15 16 22 4 18z" fill="#FFFFFF" opacity=".18"/>
+      </g>
+      <rect x="4.5" y="10.5" width="39" height="27" rx="4.5" fill="none" stroke="#D3D9E5"/>
+    </symbol>
+
+    <symbol id="ic-globe" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="20" fill="url(#gGlobe)"/>
+      <g clip-path="url(#cGlobe)" fill="#5CD08B">
+        <path d="M8 13c4-4 10-5.5 14-3.5 2.4 1.2.6 4.4-2.6 5-2.2.4-2.2 2.8.2 3.8 2.6 1.1 1.6 4.4-1.6 4.9-3.1.5-4.6 3.2-6.8 3.2-2.7 0-4.4-3.3-4.4-6.9 0-2.6 1-5 1.2-6.5z"/>
+        <path d="M29.5 7c4.5 1 9.3 4.3 11 9-2.2.6-4.4-1-6.6-.4-2.3.6-1.7 3.3.5 5 2.8 2.2 2.2 6-.6 7.7-2.8 1.6-3.8 4.9-6 6.6-1.7 1.1-3.3-.6-2.8-2.8.6-2.8-1.6-4.4-3.3-6.6-1.6-2.2 0-4.9 2.8-5.5 2.4-.4 2.2-2.8.6-4.4-1.9-1.8-.6-4.4 4.4-8.6z"/>
+        <path d="M12 33.5c2.2-1.1 5 0 5.5 2.2.4 2-.6 4.2-2.2 5.5-2.2-1.1-4-2.9-5-4.8.2-1.1.9-2.2 1.7-2.9z"/>
+      </g>
+      <ellipse cx="16.5" cy="14" rx="7" ry="4.2" fill="#FFFFFF" opacity=".3" transform="rotate(-32 16.5 14)"/>
+      <circle cx="24" cy="24" r="19.4" fill="none" stroke="#0E4FB8" stroke-opacity=".35" stroke-width="1.2"/>
+    </symbol>
+
+    <symbol id="ic-tag" viewBox="0 0 48 48">
+      <path d="M26 4h14a4 4 0 0 1 4 4v14a4 4 0 0 1-1.2 2.8L24.8 42.8a4 4 0 0 1-5.6 0L5.2 28.8a4 4 0 0 1 0-5.6L23.2 5.2A4 4 0 0 1 26 4z" fill="url(#gTag)"/>
+      <path d="M35 13c-3-6-10-8-14-5" stroke="#8C5A2B" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <circle cx="35" cy="13" r="3.2" fill="#FFFFFF"/>
+      <g fill="#FFFFFF"><circle cx="20" cy="22" r="2.6"/><circle cx="28" cy="30" r="2.6"/></g>
+      <path d="M18.5 31.5l11-11" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round"/>
+    </symbol>
+
+    <symbol id="ic-calendar" viewBox="0 0 48 48">
+      <rect x="5" y="8" width="38" height="36" rx="7" fill="#FFFFFF"/>
+      <rect x="5.5" y="8.5" width="37" height="35" rx="6.5" fill="none" stroke="#D6DEEB"/>
+      <path d="M12 8h24a7 7 0 0 1 7 7v4H5v-4a7 7 0 0 1 7-7z" fill="#FF5A4E"/>
+      <rect x="13" y="3.5" width="4" height="9" rx="2" fill="#2B3550"/>
+      <rect x="31" y="3.5" width="4" height="9" rx="2" fill="#2B3550"/>
+      <rect x="10.5" y="23.5" width="5.5" height="4.5" rx="1.2" fill="#E5EAF3"/><rect x="17.5" y="23.5" width="5.5" height="4.5" rx="1.2" fill="#E5EAF3"/><rect x="24.5" y="23.5" width="5.5" height="4.5" rx="1.2" fill="#E5EAF3"/><rect x="31.5" y="23.5" width="5.5" height="4.5" rx="1.2" fill="#E5EAF3"/><rect x="10.5" y="30" width="5.5" height="4.5" rx="1.2" fill="#E5EAF3"/><rect x="17.5" y="30" width="5.5" height="4.5" rx="1.2" fill="#E5EAF3"/><rect x="24.5" y="30" width="5.5" height="4.5" rx="1.2" fill="#1565C0"/><rect x="31.5" y="30" width="5.5" height="4.5" rx="1.2" fill="#E5EAF3"/><rect x="10.5" y="36.5" width="5.5" height="4.5" rx="1.2" fill="#E5EAF3"/><rect x="17.5" y="36.5" width="5.5" height="4.5" rx="1.2" fill="#E5EAF3"/><rect x="24.5" y="36.5" width="5.5" height="4.5" rx="1.2" fill="#E5EAF3"/><rect x="31.5" y="36.5" width="5.5" height="4.5" rx="1.2" fill="#E5EAF3"/>
+    </symbol>
+
+    <symbol id="ic-pin" viewBox="0 0 48 48">
+      <ellipse cx="24" cy="44" rx="9" ry="2.6" fill="#0B2545" opacity=".18"/>
+      <path d="M24 44S10 29.5 10 19a14 14 0 0 1 28 0c0 10.5-14 25-14 25z" fill="url(#gPin)"/>
+      <circle cx="24" cy="19" r="5.6" fill="#FFFFFF"/>
+      <path d="M15 14a10 10 0 0 1 6-6" stroke="#FFFFFF" stroke-opacity=".45" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+    </symbol>
+
+    <symbol id="ic-chat" viewBox="0 0 48 48">
+      <path d="M20 18h18a6 6 0 0 1 6 6v10a6 6 0 0 1-6 6h-2v5l-6-5H20a6 6 0 0 1-6-6V24a6 6 0 0 1 6-6z" fill="#FFB931"/>
+      <path d="M26 31h12M26 35.5h8" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M10 4h20a6 6 0 0 1 6 6v10a6 6 0 0 1-6 6H16l-7 6v-6.3A6 6 0 0 1 4 20V10a6 6 0 0 1 6-6z" fill="#2F6BFF"/>
+      <g fill="#FFFFFF"><circle cx="13" cy="15" r="2.3"/><circle cx="20" cy="15" r="2.3"/><circle cx="27" cy="15" r="2.3"/></g>
+    </symbol>
+
+    <symbol id="ic-search" viewBox="0 0 48 48">
+      <path d="M30 30l12 12" stroke="#2B3550" stroke-width="7" stroke-linecap="round"/>
+      <path d="M29 29l4 4" stroke="#8C98AE" stroke-width="7.6"/>
+      <circle cx="20" cy="20" r="14" fill="#DDF0FF" stroke="#2F6BFF" stroke-width="4.5"/>
+      <path d="M12.5 17a8.5 8.5 0 0 1 6-6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none"/>
+    </symbol>
+
+    <symbol id="ic-plan" viewBox="0 0 48 48">
+      <rect x="8" y="6" width="32" height="39" rx="5" fill="#C98A53"/>
+      <rect x="11.5" y="10.5" width="25" height="31" rx="3" fill="#FFFFFF"/>
+      <rect x="17" y="3.5" width="14" height="8" rx="3" fill="#8C98AE"/>
+      <path d="M16.5 35c2-6 7-4 9-8.5s5-4.5 6-9" stroke="#2F6BFF" stroke-width="2.2" stroke-dasharray="2.5 2.8" stroke-linecap="round" fill="none"/>
+      <circle cx="16.5" cy="35.5" r="2.6" fill="#16A36C"/>
+      <path d="M31.5 21s-4-4-4-6.8a4 4 0 0 1 8 0c0 2.8-4 6.8-4 6.8z" fill="#FF5A4E"/>
+      <circle cx="31.5" cy="14.3" r="1.5" fill="#FFFFFF"/>
+    </symbol>
+
+    <symbol id="ic-suitcase" viewBox="0 0 48 48">
+      <path d="M18 15v-4a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v4" stroke="#2B3550" stroke-width="3" fill="none"/>
+      <rect x="5" y="14" width="38" height="27" rx="6" fill="url(#gSuit)"/>
+      <rect x="13" y="14" width="3.2" height="27" fill="#D9472F"/>
+      <rect x="31.8" y="14" width="3.2" height="27" fill="#D9472F"/>
+      <circle cx="24" cy="23.5" r="4.5" fill="#FFC53D"/>
+      <rect x="19" y="30.5" width="10" height="6" rx="1.5" fill="#FFFFFF" transform="rotate(-8 24 33.5)"/>
+      <path d="M8.5 17.5h31" stroke="#FFFFFF" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="11" cy="43.5" r="2.5" fill="#2B3550"/><circle cx="37" cy="43.5" r="2.5" fill="#2B3550"/>
+    </symbol>
+
+    <symbol id="ic-check" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="21" fill="url(#gCheck)"/>
+      <path d="M14.5 24.5l6.5 6.5L34 17.5" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M11 17a14 14 0 0 1 8-7" stroke="#FFFFFF" stroke-opacity=".35" stroke-width="3" stroke-linecap="round" fill="none"/>
+    </symbol>
+
+    <symbol id="ic-mail" viewBox="0 0 48 48">
+      <rect x="4" y="10" width="40" height="29" rx="5" fill="#FFFFFF"/>
+      <path d="M5.5 37.5L19 25.5M42.5 37.5L29 25.5" stroke="#E1E7F1" stroke-width="2"/>
+      <path d="M6.2 11.6Q7 10 9 10h30q2 0 2.8 1.6L26.6 25a4 4 0 0 1-5.2 0z" fill="#FF7A59"/>
+      <circle cx="24" cy="21" r="3" fill="#FFC53D"/>
+    </symbol>
+
+    <symbol id="ic-phone" viewBox="0 0 48 48">
+      <rect x="12" y="3" width="24" height="42" rx="6" fill="#2B3550"/>
+      <rect x="14.5" y="8" width="19" height="30" rx="2.5" fill="url(#gScreen)"/>
+      <rect x="20" y="4.6" width="8" height="1.8" rx=".9" fill="#5A6680"/>
+      <rect x="17.5" y="12" width="13" height="2.4" rx="1.2" fill="#FFFFFF" opacity=".85"/>
+      <rect x="17.5" y="16.5" width="9" height="2.4" rx="1.2" fill="#FFFFFF" opacity=".55"/>
+      <circle cx="24" cy="29" r="5" fill="#2ECC71"/>
+      <path d="M21.6 27.6c.6 1.6 1.4 2.4 2.8 3l1-1 1.6.6-.3 1.4c-2.8.3-5.6-2.5-5.3-5.3l1.4-.3.6 1.6z" fill="#FFFFFF"/>
+      <rect x="20.5" y="40.5" width="7" height="2" rx="1" fill="#8C98AE"/>
+    </symbol>
+
+    <symbol id="ic-clock" viewBox="0 0 48 48">
+      <path d="M13 41l-3 4M35 41l3 4" stroke="#2B3550" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="11" cy="10" r="6" fill="#FF7A59"/>
+      <circle cx="37" cy="10" r="6" fill="#FF7A59"/>
+      <rect x="21" y="5" width="6" height="5" rx="1.5" fill="#2B3550"/>
+      <circle cx="24" cy="26" r="17" fill="#FF7A59"/>
+      <circle cx="24" cy="26" r="13" fill="#FFFFFF"/>
+      <path d="M24 26v-8.5M24 26l5.5 3" stroke="#2B3550" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="24" cy="26" r="2.2" fill="#FF7A59"/>
+    </symbol>
+
+    <!-- Airplane silhouette; takes its colour from the surrounding text -->
+    <symbol id="ic-plane" viewBox="0 0 48 48">
+      <path fill="currentColor" d="M44.5 21.8H30.2L19.6 5.5h-4.4l5.3 16.3H10.4L6.7 16.4H3.4l2.4 7.6-2.4 7.6h3.3l3.7-5.4h10.1l-5.3 16.3h4.4l10.6-16.3h14.3c1.7 0 3-1.1 3-2.2s-1.3-2.2-3-2.2z"/>
+    </symbol>
+
+    <symbol id="cloud" viewBox="0 0 200 80">
+      <path fill="#FFFFFF" d="M40 72C14 72 10 46 32 42 30 22 58 12 74 26 84 6 122 6 132 30c20-8 40 6 34 22 18 2 20 20 0 20z"/>
+    </symbol>
+
+    <symbol id="i-arrow-ur" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.3l-5.6 2.9 1.1-6.3-4.6-4.4 6.3-.9z"/></symbol>
+  </svg>
+
+  <header class="site-header" id="siteHeader">
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="#Home">
+        <span class="brand-mark" aria-hidden="true"><svg class="ico"><use href="#ic-plane"/></svg></span>
+        Travel<span class="brand-pro">Pro</span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
         <a href="#Home">Home</a>
+        <a href="#Destinations">Destinations</a>
+        <a href="#How">How it works</a>
         <a href="#About">About us</a>
         <a href="#Contact">Contact</a>
-        <input type="text" placeholder="Search..">
-        <button id="searchBtn">Search</button>
-        <button id="resetBtn">Reset</button>
-      </nav>
-    
-      <!-- Results will show here -->
-      <section id="results"></section>
-
-  <!-- Home Section -->
-  <div class="home" id="Home">
-    <h1>Explore Your Dream Destination</h1>
-    <p>
-      TravelPro helps you discover breathtaking places around the world, 
-      from tropical beaches to vibrant cities. 
-      Find the best deals, book with ease, and make memories that will last a lifetime.  
-    </p>
-    <button>Book Now</button>
-  </div>
-
-  <!-- About Section -->
-  <div class="about" id="About">
-    <p>
-      At TravelPro, our mission is simple: to make travel easy, affordable, 
-      and unforgettable for everyone. 
-      We partner with trusted airlines, hotels, and tour guides 
-      to bring you an experience tailored just for you.  
-    </p>
-    <h1>Our Team</h1>
-    <div class="team">
-      <div class="person">
-        <h2>John Doe</h2>
-        <p>John leads our technology team, ensuring our platform runs smoothly and securely.</p>
-        <p>CTO</p>
       </div>
-      <div class="person">
-        <h2>Jessica Smith</h2>
-        <p>Jessica oversees strategy and partnerships, helping us grow and serve more travelers worldwide.</p>
-        <p>CEO</p>
+
+      <div class="search" role="search">
+        <svg class="ico search-icon" aria-hidden="true"><use href="#ic-search"/></svg>
+        <input type="text" id="searchInput" placeholder="Try &quot;beach&quot;, &quot;temple&quot; or &quot;Japan&quot;" aria-label="Search destinations">
+        <button id="searchBtn" class="btn btn-small">Search</button>
+        <button id="resetBtn" class="btn btn-small btn-ghost">Reset</button>
       </div>
-      <div class="person">
-        <h2>Mike Tyson</h2>
-        <p>Mike manages our travel consultants, making sure every customer has the best support possible.</p>
-        <p>Team Lead</p>
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
+        <span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Home -->
+    <section class="hero" id="Home">
+      <!-- Animated beach background: photo with a slow zoom, plus moving waves, clouds and birds.
+           The painted beach underneath shows if the photo can't load. -->
+      <div class="hero-bg" aria-hidden="true">
+        <svg class="beach-art" viewBox="0 0 1600 900" preserveAspectRatio="xMaxYMid slice">
+          <defs>
+            <linearGradient id="bSky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#132F63"/><stop offset=".36" stop-color="#2F62A8"/>
+              <stop offset=".56" stop-color="#E99A6C"/><stop offset=".63" stop-color="#FFD59C"/>
+            </linearGradient>
+            <radialGradient id="bSun"><stop offset="0" stop-color="#FFF6D6"/><stop offset=".25" stop-color="#FFE3A3" stop-opacity=".85"/><stop offset="1" stop-color="#FFB26B" stop-opacity="0"/></radialGradient>
+            <linearGradient id="bSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2C5F99"/><stop offset=".5" stop-color="#1F8FB0"/><stop offset="1" stop-color="#3CC4C0"/></linearGradient>
+            <linearGradient id="bSand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4D39D"/><stop offset="1" stop-color="#DFAE6C"/></linearGradient>
+            <g id="fronds" fill="#0F2F2A">
+              <path d="M0 0c-50-40-120-40-170 6 60-20 120-16 170-6z"/>
+              <path d="M0 0c-30-60-90-90-150-80 60 14 110 44 150 80z"/>
+              <path d="M0 0c10-60 50-100 110-110-50 30-80 70-110 110z"/>
+              <path d="M0 0c50-30 120-30 170 10-60-14-120-14-170-10z"/>
+              <path d="M0 0c40 10 90 50 100 110-30-50-60-80-100-110z"/>
+              <path d="M0 0c-40 10-90 50-110 100 40-44 70-74 110-100z"/>
+              <circle r="9" fill="#2B1F17"/>
+            </g>
+          </defs>
+          <rect width="1600" height="900" fill="url(#bSky)"/>
+          <circle class="art-sun" cx="1230" cy="560" r="260" fill="url(#bSun)"/>
+          <circle cx="1230" cy="560" r="56" fill="#FFF3D0"/>
+          <path d="M760 568c40-22 90-30 130-16 30-18 70-18 100 4 30-4 60 2 90 12z" fill="#33406A" opacity=".5"/>
+          <rect y="566" width="1600" height="334" fill="url(#bSea)"/>
+          <path d="M1180 570h100l50 190h-200z" fill="#FFE2A8" opacity=".26"/>
+          <g class="glints" fill="#FFFFFF">
+            <rect x="1200" y="600" width="60" height="3" rx="1.5"/>
+            <rect x="1240" y="630" width="40" height="3" rx="1.5"/>
+            <rect x="1185" y="660" width="80" height="3" rx="1.5"/>
+            <rect x="1250" y="698" width="50" height="3" rx="1.5"/>
+            <rect x="1200" y="732" width="70" height="3" rx="1.5"/>
+            <rect x="560" y="618" width="46" height="2.5" rx="1.2"/>
+            <rect x="880" y="650" width="36" height="2.5" rx="1.2"/>
+            <rect x="320" y="690" width="52" height="2.5" rx="1.2"/>
+          </g>
+          <path d="M0 742c260-44 560-34 860-10s520 40 740 6V900H0z" fill="url(#bSand)"/>
+          <path d="M0 742c260-44 560-34 860-10s520 40 740 6v22c-220 34-470 30-760 6S220 752 0 790z" fill="#D6A463" opacity=".45"/>
+          <g class="palm palm--1">
+            <path d="M1452 900C1440 790 1450 690 1500 600" stroke="#2B1F17" stroke-width="20" fill="none" stroke-linecap="round"/>
+            <use href="#fronds" transform="translate(1500 600)"/>
+          </g>
+          <g class="palm palm--2">
+            <path d="M1372 900C1378 820 1366 760 1330 704" stroke="#2B1F17" stroke-width="15" fill="none" stroke-linecap="round"/>
+            <use href="#fronds" transform="translate(1330 704) scale(.72) rotate(-12)"/>
+          </g>
+        </svg>
+
+        <img class="hero-photo" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=75" alt="">
+        <div class="hero-glow"></div>
+
+        <div class="birds">
+          <svg viewBox="0 0 120 50">
+            <path class="bird" d="M0 14Q7 6 14 13Q21 6 28 14"/>
+            <path class="bird bird--2" d="M40 30Q46 23 52 29Q58 23 64 30"/>
+            <path class="bird bird--3" d="M78 8Q83 2 88 7Q93 2 98 8"/>
+          </svg>
+        </div>
+
+        <div class="hero-shade"></div>
+
+        <div class="clouds">
+          <svg class="cloud cloud--1" viewBox="0 0 200 80"><use href="#cloud"/></svg>
+          <svg class="cloud cloud--2" viewBox="0 0 200 80"><use href="#cloud"/></svg>
+          <svg class="cloud cloud--3" viewBox="0 0 200 80"><use href="#cloud"/></svg>
+        </div>
+
+
+        <div class="waves">
+          <svg class="wave wave--back" viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 46q90 -14 180 0t180 0q90 -14 180 0t180 0q90 -14 180 0t180 0q90 -14 180 0t180 0q90 -14 180 0t180 0q90 -14 180 0t180 0q90 -14 180 0t180 0q90 -14 180 0t180 0V120H0z"/></svg>
+          <svg class="wave wave--mid" viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 66q90 -11 180 0t180 0q90 -11 180 0t180 0q90 -11 180 0t180 0q90 -11 180 0t180 0q90 -11 180 0t180 0q90 -11 180 0t180 0q90 -11 180 0t180 0q90 -11 180 0t180 0V120H0z"/></svg>
+          <svg class="wave wave--front" viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 88q90 -8 180 0t180 0q90 -8 180 0t180 0q90 -8 180 0t180 0q90 -8 180 0t180 0q90 -8 180 0t180 0q90 -8 180 0t180 0q90 -8 180 0t180 0q90 -8 180 0t180 0V120H0z"/></svg>
+        </div>
+      </div>
+
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Your next adventure starts here</span>
+          <h1>Explore Your <em>Dream</em> Destination</h1>
+          <p>
+            TravelPro helps you discover breathtaking places around the world,
+            from tropical beaches to vibrant cities. Find the best deals, book with ease,
+            and make memories that will last a lifetime.
+          </p>
+          <div class="hero-actions">
+            <a href="#Contact" class="btn btn-large">Book Now <svg class="ico btn-plane" aria-hidden="true"><use href="#ic-plane"/></svg></a>
+            <a href="#About" class="btn btn-large btn-outline">Learn more</a>
+          </div>
+          <div class="quick-search">
+            <span class="quick-label">Popular:</span>
+            <button type="button" class="chip" data-query="beach"><svg class="ico" aria-hidden="true"><use href="#ic-beach"/></svg>Beaches</button>
+            <button type="button" class="chip" data-query="temple"><svg class="ico" aria-hidden="true"><use href="#ic-temple"/></svg>Temples</button>
+            <button type="button" class="chip" data-query="japan"><svg class="ico" aria-hidden="true"><use href="#ic-japan"/></svg>Japan</button>
+            <button type="button" class="chip" data-query="italy"><svg class="ico" aria-hidden="true"><use href="#ic-italy"/></svg>Italy</button>
+          </div>
+        </div>
+
+        <div class="hero-cards">
+          <button type="button" class="float-card float-card--a" data-query="japan">
+            <span class="float-thumb thumb-city"><img src="https://images.unsplash.com/photo-1549692520-acc6669e2f0c?auto=format&fit=crop&w=400&q=60" alt=""></span>
+            <span class="float-text"><strong>Kyoto, Japan</strong><small><svg class="ico" aria-hidden="true"><use href="#ic-temple"/></svg>Temples &amp; cherry blossoms</small></span>
+          </button>
+          <button type="button" class="float-card float-card--b" data-query="beach">
+            <span class="float-thumb thumb-beach"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=60" alt=""></span>
+            <span class="float-text"><strong>Bora Bora</strong><small><svg class="i star" aria-hidden="true"><use href="#i-star"/></svg>4.9 · Turquoise lagoons</small></span>
+          </button>
+          <div class="float-badge">
+            <span class="float-badge-icon"><svg class="ico"><use href="#ic-globe"/></svg></span>
+            <span><strong>150+</strong><small>destinations</small></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <dl class="hero-stats">
+          <div><dt>Destinations</dt><dd>150+</dd></div>
+          <div><dt>Happy travellers</dt><dd>25k+</dd></div>
+          <div><dt>Average rating</dt><dd>4.9</dd></div>
+          <div><dt>Travel support</dt><dd>24/7</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Search results -->
+    <section class="results-section" id="resultsSection" hidden>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow eyebrow-dark">Search results</span>
+            <h2 class="section-title" id="resultsTitle">Recommendations</h2>
+          </div>
+          <button type="button" class="btn btn-small btn-soft" id="resultsClose">Clear results</button>
+        </div>
+        <div id="results" class="results" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Destinations -->
+    <section class="destinations" id="Destinations">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow eyebrow-dark">Popular destinations</span>
+            <h2 class="section-title">Find a trip that feels like <em>you</em></h2>
+          </div>
+          <p class="lead">Hand-picked places our travellers keep coming back to. Pick a style, then tap a place to see our recommendations.</p>
+        </div>
+
+        <div class="filters" role="group" aria-label="Filter destinations">
+          <button type="button" class="filter is-active" data-filter="all" aria-pressed="true"><svg class="ico" aria-hidden="true"><use href="#ic-globe"/></svg>All</button>
+          <button type="button" class="filter" data-filter="beach" aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#ic-beach"/></svg>Beaches</button>
+          <button type="button" class="filter" data-filter="temple" aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#ic-temple"/></svg>Temples</button>
+          <button type="button" class="filter" data-filter="city" aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#ic-city"/></svg>Cities</button>
+        </div>
+
+        <div class="dest-grid" id="destGrid">
+          <article class="dest-card dest-card--large thumb-beach" data-cat="beach">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=65" alt="Turquoise water and white sand in Bora Bora" loading="lazy">
+            <div class="dest-info">
+              <span class="tag">Beach</span>
+              <h3>Bora Bora</h3>
+              <p>French Polynesia · Coral reefs and overwater villas</p>
+            </div>
+            <button type="button" class="dest-go" data-query="beach" aria-label="See beach recommendations"><svg class="i"><use href="#i-arrow-ur"/></svg></button>
+          </article>
+
+          <article class="dest-card thumb-city" data-cat="city">
+            <img src="https://images.unsplash.com/photo-1549692520-acc6669e2f0c?auto=format&fit=crop&w=700&q=60" alt="Traditional streets in Kyoto" loading="lazy">
+            <div class="dest-info"><span class="tag">City</span><h3>Kyoto</h3><p>Japan</p></div>
+            <button type="button" class="dest-go" data-query="japan" aria-label="See cities in Japan"><svg class="i"><use href="#i-arrow-ur"/></svg></button>
+          </article>
+
+          <article class="dest-card thumb-temple" data-cat="temple">
+            <img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=700&q=60" alt="Angkor Wat at sunrise" loading="lazy">
+            <div class="dest-info"><span class="tag">Temple</span><h3>Angkor Wat</h3><p>Cambodia</p></div>
+            <button type="button" class="dest-go" data-query="temple" aria-label="See temple recommendations"><svg class="i"><use href="#i-arrow-ur"/></svg></button>
+          </article>
+
+          <article class="dest-card thumb-city" data-cat="city">
+            <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=700&q=60" alt="Gondolas on a canal in Venice" loading="lazy">
+            <div class="dest-info"><span class="tag">City</span><h3>Venice</h3><p>Italy</p></div>
+            <button type="button" class="dest-go" data-query="italy" aria-label="See cities in Italy"><svg class="i"><use href="#i-arrow-ur"/></svg></button>
+          </article>
+
+          <article class="dest-card thumb-city" data-cat="city">
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=700&q=60" alt="Tokyo" loading="lazy">
+            <div class="dest-info"><span class="tag">City</span><h3>Tokyo</h3><p>Japan</p></div>
+            <button type="button" class="dest-go" data-query="japan" aria-label="See cities in Japan"><svg class="i"><use href="#i-arrow-ur"/></svg></button>
+          </article>
+
+          <article class="dest-card dest-card--wide thumb-temple" data-cat="temple">
+            <img src="https://images.unsplash.com/photo-1597077083071-c13c4c327582?auto=format&fit=crop&w=1000&q=60" alt="The Golden Temple in Amritsar" loading="lazy">
+            <div class="dest-info"><span class="tag">Temple</span><h3>Golden Temple</h3><p>Amritsar, India</p></div>
+            <button type="button" class="dest-go" data-query="temple" aria-label="See temple recommendations"><svg class="i"><use href="#i-arrow-ur"/></svg></button>
+          </article>
+
+          <article class="dest-card dest-card--wide thumb-city" data-cat="city">
+            <img src="https://images.unsplash.com/photo-1526481280698-8fccf6c7c1f3?auto=format&fit=crop&w=1000&q=60" alt="Rome" loading="lazy">
+            <div class="dest-info"><span class="tag">City</span><h3>Rome</h3><p>Italy</p></div>
+            <button type="button" class="dest-go" data-query="italy" aria-label="See cities in Italy"><svg class="i"><use href="#i-arrow-ur"/></svg></button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why TravelPro -->
+    <section class="features">
+      <div class="container features-grid">
+        <div class="features-intro">
+          <span class="eyebrow eyebrow-dark">Why TravelPro</span>
+          <h2 class="section-title">Everything you need for a <em>stress-free</em> trip</h2>
+          <p class="lead">From the first idea to the flight home, our consultants handle the details so you can enjoy the journey.</p>
+          <a href="#Contact" class="btn btn-large btn-dark">Plan my trip <svg class="ico btn-plane" aria-hidden="true"><use href="#ic-plane"/></svg></a>
+        </div>
+        <div class="feature-list">
+          <article class="feature feature--coral">
+            <span class="feature-icon"><svg class="ico"><use href="#ic-tag"/></svg></span>
+            <h3>Best price guarantee</h3>
+            <p>Found the same trip for less? We’ll match the price.</p>
+          </article>
+          <article class="feature feature--blue">
+            <span class="feature-icon"><svg class="ico"><use href="#ic-calendar"/></svg></span>
+            <h3>Flexible booking</h3>
+            <p>Change your dates without the headache when plans shift.</p>
+          </article>
+          <article class="feature feature--teal">
+            <span class="feature-icon"><svg class="ico"><use href="#ic-pin"/></svg></span>
+            <h3>Local expert guides</h3>
+            <p>Trusted guides who know the places worth your time.</p>
+          </article>
+          <article class="feature feature--sun">
+            <span class="feature-icon"><svg class="ico"><use href="#ic-chat"/></svg></span>
+            <h3>24/7 support</h3>
+            <p>Real people to help, wherever you are in the world.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works: a sample trip on a world map -->
+    <section class="how" id="How">
+      <div class="container">
+        <div class="section-head section-head--center">
+          <div>
+            <span class="eyebrow">How it works</span>
+            <h2 class="section-title light">From first search to <em>take-off</em></h2>
+            <p class="lead lead--light">Follow a sample trip from New York to Kyoto. Three simple steps take you from an idea to your boarding gate.</p>
+          </div>
+        </div>
+
+        <div class="map-card">
+          <div class="flight-bar">
+            <div class="flight-code">
+              <span class="flight-badge"><svg class="ico"><use href="#ic-plane"/></svg></span>
+              <span><strong>TP 2048</strong><small>Sample trip</small></span>
+            </div>
+            <div class="flight-route" aria-hidden="true">
+              <span class="flight-city"><strong>JFK</strong><small>New York</small></span>
+              <span class="flight-track"><span class="flight-fill" id="flightFill"></span><svg class="ico flight-plane" id="flightPlane"><use href="#ic-plane"/></svg></span>
+              <span class="flight-city flight-city--end"><strong>KIX</strong><small>Kyoto</small></span>
+            </div>
+            <p class="flight-status" aria-live="polite"><span class="live-dot" aria-hidden="true"></span><span id="flightStatus">Step 1 of 3 · Find your place</span></p>
+          </div>
+
+          <div class="map-wrap">
+            <svg class="map" id="journeyMap" viewBox="0 0 1000 384" role="img" aria-label="World map showing a sample trip from New York, through Rome, to Kyoto">
+              <defs>
+                <linearGradient id="routeGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFB057"/><stop offset=".5" stop-color="#FF6F5B"/><stop offset="1" stop-color="#F2456F"/></linearGradient>
+              </defs>
+              <g class="graticule"><line x1="55.6" y1="0" x2="55.6" y2="384"/><line x1="138.9" y1="0" x2="138.9" y2="384"/><line x1="222.2" y1="0" x2="222.2" y2="384"/><line x1="305.6" y1="0" x2="305.6" y2="384"/><line x1="388.9" y1="0" x2="388.9" y2="384"/><line x1="472.2" y1="0" x2="472.2" y2="384"/><line x1="555.6" y1="0" x2="555.6" y2="384"/><line x1="638.9" y1="0" x2="638.9" y2="384"/><line x1="722.2" y1="0" x2="722.2" y2="384"/><line x1="805.6" y1="0" x2="805.6" y2="384"/><line x1="888.9" y1="0" x2="888.9" y2="384"/><line x1="972.2" y1="0" x2="972.2" y2="384"/><line x1="0" y1="55.7" x2="1000" y2="55.7"/><line x1="0" y1="139.1" x2="1000" y2="139.1"/><line x1="0" y1="222.6" x2="1000" y2="222.6"/><line x1="0" y1="306.1" x2="1000" y2="306.1"/></g>
+              <path class="map-land" d="M212.5 4.2h.01M220.8 4.2h.01M229.2 4.2h.01M237.5 4.2h.01M245.8 4.2h.01M254.2 4.2h.01M262.5 4.2h.01M279.2 4.2h.01M287.5 4.2h.01M295.8 4.2h.01M304.2 4.2h.01M312.5 4.2h.01M320.8 4.2h.01M329.2 4.2h.01M337.5 4.2h.01M345.8 4.2h.01M354.2 4.2h.01M362.5 4.2h.01M370.8 4.2h.01M379.2 4.2h.01M387.5 4.2h.01M395.8 4.2h.01M404.2 4.2h.01M412.5 4.2h.01M504.2 4.2h.01M512.5 4.2h.01M520.8 4.2h.01M529.2 4.2h.01M304.2 12.5h.01M312.5 12.5h.01M320.8 12.5h.01M329.2 12.5h.01M337.5 12.5h.01M345.8 12.5h.01M354.2 12.5h.01M362.5 12.5h.01M370.8 12.5h.01M379.2 12.5h.01M387.5 12.5h.01M395.8 12.5h.01M404.2 12.5h.01M412.5 12.5h.01M637.5 12.5h.01M645.8 12.5h.01M729.2 12.5h.01M737.5 12.5h.01M745.8 12.5h.01M754.2 12.5h.01M762.5 12.5h.01M770.8 12.5h.01M779.2 12.5h.01M137.5 20.9h.01M145.8 20.9h.01M154.2 20.9h.01M162.5 20.9h.01M170.8 20.9h.01M179.2 20.9h.01M229.2 20.9h.01M237.5 20.9h.01M245.8 20.9h.01M254.2 20.9h.01M320.8 20.9h.01M329.2 20.9h.01M337.5 20.9h.01M345.8 20.9h.01M354.2 20.9h.01M362.5 20.9h.01M370.8 20.9h.01M379.2 20.9h.01M387.5 20.9h.01M395.8 20.9h.01M404.2 20.9h.01M412.5 20.9h.01M620.8 20.9h.01M662.5 20.9h.01M670.8 20.9h.01M679.2 20.9h.01M687.5 20.9h.01M695.8 20.9h.01M704.2 20.9h.01M712.5 20.9h.01M720.8 20.9h.01M729.2 20.9h.01M737.5 20.9h.01M745.8 20.9h.01M754.2 20.9h.01M762.5 20.9h.01M770.8 20.9h.01M779.2 20.9h.01M787.5 20.9h.01M795.8 20.9h.01M804.2 20.9h.01M812.5 20.9h.01M820.8 20.9h.01M829.2 20.9h.01M29.2 29.2h.01M37.5 29.2h.01M45.8 29.2h.01M54.2 29.2h.01M62.5 29.2h.01M70.8 29.2h.01M79.2 29.2h.01M87.5 29.2h.01M95.8 29.2h.01M104.2 29.2h.01M112.5 29.2h.01M120.8 29.2h.01M129.2 29.2h.01M145.8 29.2h.01M154.2 29.2h.01M162.5 29.2h.01M170.8 29.2h.01M179.2 29.2h.01M195.8 29.2h.01M204.2 29.2h.01M212.5 29.2h.01M254.2 29.2h.01M262.5 29.2h.01M270.8 29.2h.01M279.2 29.2h.01M329.2 29.2h.01M337.5 29.2h.01M345.8 29.2h.01M354.2 29.2h.01M362.5 29.2h.01M370.8 29.2h.01M379.2 29.2h.01M387.5 29.2h.01M395.8 29.2h.01M404.2 29.2h.01M529.2 29.2h.01M537.5 29.2h.01M545.8 29.2h.01M554.2 29.2h.01M562.5 29.2h.01M662.5 29.2h.01M670.8 29.2h.01M679.2 29.2h.01M687.5 29.2h.01M695.8 29.2h.01M704.2 29.2h.01M712.5 29.2h.01M720.8 29.2h.01M729.2 29.2h.01M737.5 29.2h.01M745.8 29.2h.01M754.2 29.2h.01M762.5 29.2h.01M770.8 29.2h.01M779.2 29.2h.01M787.5 29.2h.01M795.8 29.2h.01M804.2 29.2h.01M812.5 29.2h.01M820.8 29.2h.01M829.2 29.2h.01M837.5 29.2h.01M845.8 29.2h.01M854.2 29.2h.01M862.5 29.2h.01M870.8 29.2h.01M879.2 29.2h.01M887.5 29.2h.01M895.8 29.2h.01M904.2 29.2h.01M912.5 29.2h.01M920.8 29.2h.01M929.2 29.2h.01M937.5 29.2h.01M945.8 29.2h.01M954.2 29.2h.01M962.5 29.2h.01M12.5 37.6h.01M20.8 37.6h.01M29.2 37.6h.01M37.5 37.6h.01M45.8 37.6h.01M54.2 37.6h.01M62.5 37.6h.01M70.8 37.6h.01M79.2 37.6h.01M87.5 37.6h.01M95.8 37.6h.01M104.2 37.6h.01M112.5 37.6h.01M120.8 37.6h.01M129.2 37.6h.01M137.5 37.6h.01M145.8 37.6h.01M154.2 37.6h.01M162.5 37.6h.01M170.8 37.6h.01M179.2 37.6h.01M187.5 37.6h.01M195.8 37.6h.01M204.2 37.6h.01M212.5 37.6h.01M220.8 37.6h.01M229.2 37.6h.01M237.5 37.6h.01M245.8 37.6h.01M270.8 37.6h.01M279.2 37.6h.01M287.5 37.6h.01M295.8 37.6h.01M329.2 37.6h.01M337.5 37.6h.01M345.8 37.6h.01M354.2 37.6h.01M362.5 37.6h.01M370.8 37.6h.01M379.2 37.6h.01M512.5 37.6h.01M520.8 37.6h.01M529.2 37.6h.01M537.5 37.6h.01M545.8 37.6h.01M554.2 37.6h.01M562.5 37.6h.01M570.8 37.6h.01M579.2 37.6h.01M595.8 37.6h.01M604.2 37.6h.01M612.5 37.6h.01M620.8 37.6h.01M629.2 37.6h.01M637.5 37.6h.01M645.8 37.6h.01M654.2 37.6h.01M662.5 37.6h.01M670.8 37.6h.01M679.2 37.6h.01M687.5 37.6h.01M695.8 37.6h.01M704.2 37.6h.01M712.5 37.6h.01M720.8 37.6h.01M729.2 37.6h.01M737.5 37.6h.01M745.8 37.6h.01M754.2 37.6h.01M762.5 37.6h.01M770.8 37.6h.01M779.2 37.6h.01M787.5 37.6h.01M795.8 37.6h.01M804.2 37.6h.01M812.5 37.6h.01M820.8 37.6h.01M829.2 37.6h.01M837.5 37.6h.01M845.8 37.6h.01M854.2 37.6h.01M862.5 37.6h.01M870.8 37.6h.01M879.2 37.6h.01M887.5 37.6h.01M895.8 37.6h.01M904.2 37.6h.01M912.5 37.6h.01M920.8 37.6h.01M929.2 37.6h.01M937.5 37.6h.01M945.8 37.6h.01M954.2 37.6h.01M962.5 37.6h.01M970.8 37.6h.01M20.8 45.9h.01M29.2 45.9h.01M37.5 45.9h.01M45.8 45.9h.01M54.2 45.9h.01M62.5 45.9h.01M70.8 45.9h.01M79.2 45.9h.01M87.5 45.9h.01M95.8 45.9h.01M104.2 45.9h.01M112.5 45.9h.01M120.8 45.9h.01M129.2 45.9h.01M137.5 45.9h.01M145.8 45.9h.01M154.2 45.9h.01M162.5 45.9h.01M170.8 45.9h.01M179.2 45.9h.01M187.5 45.9h.01M195.8 45.9h.01M204.2 45.9h.01M212.5 45.9h.01M220.8 45.9h.01M279.2 45.9h.01M287.5 45.9h.01M337.5 45.9h.01M345.8 45.9h.01M354.2 45.9h.01M420.8 45.9h.01M495.8 45.9h.01M504.2 45.9h.01M512.5 45.9h.01M520.8 45.9h.01M537.5 45.9h.01M545.8 45.9h.01M554.2 45.9h.01M562.5 45.9h.01M570.8 45.9h.01M579.2 45.9h.01M587.5 45.9h.01M595.8 45.9h.01M604.2 45.9h.01M612.5 45.9h.01M620.8 45.9h.01M629.2 45.9h.01M637.5 45.9h.01M645.8 45.9h.01M654.2 45.9h.01M662.5 45.9h.01M670.8 45.9h.01M679.2 45.9h.01M687.5 45.9h.01M695.8 45.9h.01M704.2 45.9h.01M712.5 45.9h.01M720.8 45.9h.01M729.2 45.9h.01M737.5 45.9h.01M745.8 45.9h.01M754.2 45.9h.01M762.5 45.9h.01M770.8 45.9h.01M779.2 45.9h.01M787.5 45.9h.01M795.8 45.9h.01M804.2 45.9h.01M812.5 45.9h.01M820.8 45.9h.01M829.2 45.9h.01M837.5 45.9h.01M845.8 45.9h.01M854.2 45.9h.01M862.5 45.9h.01M870.8 45.9h.01M879.2 45.9h.01M887.5 45.9h.01M895.8 45.9h.01M904.2 45.9h.01M912.5 45.9h.01M920.8 45.9h.01M929.2 45.9h.01M937.5 45.9h.01M945.8 45.9h.01M954.2 45.9h.01M962.5 45.9h.01M20.8 54.3h.01M29.2 54.3h.01M37.5 54.3h.01M45.8 54.3h.01M54.2 54.3h.01M62.5 54.3h.01M79.2 54.3h.01M87.5 54.3h.01M95.8 54.3h.01M104.2 54.3h.01M112.5 54.3h.01M120.8 54.3h.01M129.2 54.3h.01M137.5 54.3h.01M145.8 54.3h.01M154.2 54.3h.01M162.5 54.3h.01M170.8 54.3h.01M179.2 54.3h.01M187.5 54.3h.01M195.8 54.3h.01M204.2 54.3h.01M212.5 54.3h.01M262.5 54.3h.01M270.8 54.3h.01M345.8 54.3h.01M487.5 54.3h.01M495.8 54.3h.01M504.2 54.3h.01M512.5 54.3h.01M520.8 54.3h.01M537.5 54.3h.01M545.8 54.3h.01M554.2 54.3h.01M562.5 54.3h.01M570.8 54.3h.01M579.2 54.3h.01M587.5 54.3h.01M595.8 54.3h.01M604.2 54.3h.01M612.5 54.3h.01M620.8 54.3h.01M629.2 54.3h.01M637.5 54.3h.01M645.8 54.3h.01M654.2 54.3h.01M662.5 54.3h.01M670.8 54.3h.01M679.2 54.3h.01M687.5 54.3h.01M695.8 54.3h.01M704.2 54.3h.01M712.5 54.3h.01M720.8 54.3h.01M729.2 54.3h.01M737.5 54.3h.01M745.8 54.3h.01M754.2 54.3h.01M762.5 54.3h.01M770.8 54.3h.01M779.2 54.3h.01M787.5 54.3h.01M795.8 54.3h.01M804.2 54.3h.01M812.5 54.3h.01M820.8 54.3h.01M829.2 54.3h.01M837.5 54.3h.01M845.8 54.3h.01M854.2 54.3h.01M862.5 54.3h.01M870.8 54.3h.01M879.2 54.3h.01M887.5 54.3h.01M895.8 54.3h.01M904.2 54.3h.01M929.2 54.3h.01M937.5 54.3h.01M945.8 54.3h.01M29.2 62.6h.01M37.5 62.6h.01M104.2 62.6h.01M112.5 62.6h.01M120.8 62.6h.01M129.2 62.6h.01M137.5 62.6h.01M145.8 62.6h.01M154.2 62.6h.01M162.5 62.6h.01M170.8 62.6h.01M179.2 62.6h.01M187.5 62.6h.01M195.8 62.6h.01M204.2 62.6h.01M212.5 62.6h.01M254.2 62.6h.01M262.5 62.6h.01M270.8 62.6h.01M279.2 62.6h.01M287.5 62.6h.01M295.8 62.6h.01M462.5 62.6h.01M512.5 62.6h.01M545.8 62.6h.01M554.2 62.6h.01M562.5 62.6h.01M570.8 62.6h.01M579.2 62.6h.01M587.5 62.6h.01M595.8 62.6h.01M604.2 62.6h.01M612.5 62.6h.01M620.8 62.6h.01M629.2 62.6h.01M637.5 62.6h.01M645.8 62.6h.01M654.2 62.6h.01M662.5 62.6h.01M670.8 62.6h.01M679.2 62.6h.01M687.5 62.6h.01M695.8 62.6h.01M704.2 62.6h.01M712.5 62.6h.01M720.8 62.6h.01M729.2 62.6h.01M737.5 62.6h.01M745.8 62.6h.01M754.2 62.6h.01M762.5 62.6h.01M770.8 62.6h.01M779.2 62.6h.01M787.5 62.6h.01M795.8 62.6h.01M804.2 62.6h.01M812.5 62.6h.01M820.8 62.6h.01M829.2 62.6h.01M837.5 62.6h.01M845.8 62.6h.01M854.2 62.6h.01M912.5 62.6h.01M920.8 62.6h.01M112.5 71.0h.01M120.8 71.0h.01M129.2 71.0h.01M137.5 71.0h.01M145.8 71.0h.01M154.2 71.0h.01M162.5 71.0h.01M170.8 71.0h.01M179.2 71.0h.01M187.5 71.0h.01M195.8 71.0h.01M204.2 71.0h.01M212.5 71.0h.01M220.8 71.0h.01M229.2 71.0h.01M237.5 71.0h.01M254.2 71.0h.01M262.5 71.0h.01M270.8 71.0h.01M279.2 71.0h.01M287.5 71.0h.01M295.8 71.0h.01M304.2 71.0h.01M454.2 71.0h.01M470.8 71.0h.01M529.2 71.0h.01M537.5 71.0h.01M545.8 71.0h.01M554.2 71.0h.01M562.5 71.0h.01M570.8 71.0h.01M579.2 71.0h.01M587.5 71.0h.01M595.8 71.0h.01M604.2 71.0h.01M612.5 71.0h.01M620.8 71.0h.01M629.2 71.0h.01M637.5 71.0h.01M645.8 71.0h.01M654.2 71.0h.01M662.5 71.0h.01M670.8 71.0h.01M679.2 71.0h.01M687.5 71.0h.01M695.8 71.0h.01M704.2 71.0h.01M712.5 71.0h.01M720.8 71.0h.01M729.2 71.0h.01M737.5 71.0h.01M745.8 71.0h.01M754.2 71.0h.01M762.5 71.0h.01M770.8 71.0h.01M779.2 71.0h.01M787.5 71.0h.01M795.8 71.0h.01M804.2 71.0h.01M812.5 71.0h.01M820.8 71.0h.01M829.2 71.0h.01M837.5 71.0h.01M845.8 71.0h.01M912.5 71.0h.01M120.8 79.3h.01M129.2 79.3h.01M137.5 79.3h.01M145.8 79.3h.01M154.2 79.3h.01M162.5 79.3h.01M170.8 79.3h.01M179.2 79.3h.01M187.5 79.3h.01M195.8 79.3h.01M204.2 79.3h.01M212.5 79.3h.01M220.8 79.3h.01M229.2 79.3h.01M237.5 79.3h.01M245.8 79.3h.01M254.2 79.3h.01M262.5 79.3h.01M270.8 79.3h.01M279.2 79.3h.01M287.5 79.3h.01M295.8 79.3h.01M304.2 79.3h.01M312.5 79.3h.01M462.5 79.3h.01M470.8 79.3h.01M487.5 79.3h.01M495.8 79.3h.01M504.2 79.3h.01M512.5 79.3h.01M520.8 79.3h.01M529.2 79.3h.01M537.5 79.3h.01M545.8 79.3h.01M554.2 79.3h.01M562.5 79.3h.01M570.8 79.3h.01M579.2 79.3h.01M587.5 79.3h.01M595.8 79.3h.01M604.2 79.3h.01M612.5 79.3h.01M620.8 79.3h.01M629.2 79.3h.01M637.5 79.3h.01M645.8 79.3h.01M654.2 79.3h.01M662.5 79.3h.01M670.8 79.3h.01M679.2 79.3h.01M687.5 79.3h.01M695.8 79.3h.01M704.2 79.3h.01M712.5 79.3h.01M720.8 79.3h.01M729.2 79.3h.01M737.5 79.3h.01M745.8 79.3h.01M754.2 79.3h.01M762.5 79.3h.01M770.8 79.3h.01M779.2 79.3h.01M787.5 79.3h.01M795.8 79.3h.01M804.2 79.3h.01M812.5 79.3h.01M820.8 79.3h.01M829.2 79.3h.01M837.5 79.3h.01M845.8 79.3h.01M854.2 79.3h.01M862.5 79.3h.01M129.2 87.7h.01M137.5 87.7h.01M145.8 87.7h.01M154.2 87.7h.01M162.5 87.7h.01M170.8 87.7h.01M179.2 87.7h.01M187.5 87.7h.01M195.8 87.7h.01M204.2 87.7h.01M212.5 87.7h.01M220.8 87.7h.01M229.2 87.7h.01M237.5 87.7h.01M245.8 87.7h.01M254.2 87.7h.01M262.5 87.7h.01M270.8 87.7h.01M279.2 87.7h.01M287.5 87.7h.01M295.8 87.7h.01M304.2 87.7h.01M470.8 87.7h.01M479.2 87.7h.01M487.5 87.7h.01M495.8 87.7h.01M504.2 87.7h.01M512.5 87.7h.01M520.8 87.7h.01M529.2 87.7h.01M537.5 87.7h.01M545.8 87.7h.01M554.2 87.7h.01M562.5 87.7h.01M570.8 87.7h.01M579.2 87.7h.01M587.5 87.7h.01M595.8 87.7h.01M604.2 87.7h.01M612.5 87.7h.01M620.8 87.7h.01M629.2 87.7h.01M637.5 87.7h.01M645.8 87.7h.01M654.2 87.7h.01M662.5 87.7h.01M670.8 87.7h.01M679.2 87.7h.01M687.5 87.7h.01M695.8 87.7h.01M704.2 87.7h.01M712.5 87.7h.01M720.8 87.7h.01M729.2 87.7h.01M737.5 87.7h.01M745.8 87.7h.01M754.2 87.7h.01M762.5 87.7h.01M770.8 87.7h.01M779.2 87.7h.01M787.5 87.7h.01M795.8 87.7h.01M804.2 87.7h.01M812.5 87.7h.01M820.8 87.7h.01M829.2 87.7h.01M837.5 87.7h.01M845.8 87.7h.01M854.2 87.7h.01M129.2 96.0h.01M137.5 96.0h.01M145.8 96.0h.01M154.2 96.0h.01M162.5 96.0h.01M170.8 96.0h.01M179.2 96.0h.01M187.5 96.0h.01M195.8 96.0h.01M204.2 96.0h.01M212.5 96.0h.01M220.8 96.0h.01M229.2 96.0h.01M237.5 96.0h.01M245.8 96.0h.01M254.2 96.0h.01M262.5 96.0h.01M270.8 96.0h.01M279.2 96.0h.01M287.5 96.0h.01M295.8 96.0h.01M470.8 96.0h.01M479.2 96.0h.01M487.5 96.0h.01M495.8 96.0h.01M504.2 96.0h.01M512.5 96.0h.01M520.8 96.0h.01M529.2 96.0h.01M537.5 96.0h.01M545.8 96.0h.01M554.2 96.0h.01M570.8 96.0h.01M579.2 96.0h.01M587.5 96.0h.01M595.8 96.0h.01M604.2 96.0h.01M612.5 96.0h.01M620.8 96.0h.01M629.2 96.0h.01M637.5 96.0h.01M645.8 96.0h.01M654.2 96.0h.01M662.5 96.0h.01M670.8 96.0h.01M679.2 96.0h.01M687.5 96.0h.01M695.8 96.0h.01M704.2 96.0h.01M712.5 96.0h.01M720.8 96.0h.01M729.2 96.0h.01M737.5 96.0h.01M745.8 96.0h.01M754.2 96.0h.01M762.5 96.0h.01M770.8 96.0h.01M779.2 96.0h.01M787.5 96.0h.01M795.8 96.0h.01M804.2 96.0h.01M812.5 96.0h.01M820.8 96.0h.01M829.2 96.0h.01M837.5 96.0h.01M845.8 96.0h.01M129.2 104.3h.01M137.5 104.3h.01M145.8 104.3h.01M154.2 104.3h.01M162.5 104.3h.01M170.8 104.3h.01M179.2 104.3h.01M187.5 104.3h.01M195.8 104.3h.01M204.2 104.3h.01M212.5 104.3h.01M220.8 104.3h.01M229.2 104.3h.01M237.5 104.3h.01M245.8 104.3h.01M254.2 104.3h.01M262.5 104.3h.01M270.8 104.3h.01M454.2 104.3h.01M462.5 104.3h.01M470.8 104.3h.01M479.2 104.3h.01M504.2 104.3h.01M512.5 104.3h.01M529.2 104.3h.01M537.5 104.3h.01M545.8 104.3h.01M595.8 104.3h.01M604.2 104.3h.01M612.5 104.3h.01M620.8 104.3h.01M629.2 104.3h.01M637.5 104.3h.01M645.8 104.3h.01M654.2 104.3h.01M662.5 104.3h.01M670.8 104.3h.01M679.2 104.3h.01M687.5 104.3h.01M695.8 104.3h.01M704.2 104.3h.01M712.5 104.3h.01M720.8 104.3h.01M729.2 104.3h.01M737.5 104.3h.01M745.8 104.3h.01M754.2 104.3h.01M762.5 104.3h.01M770.8 104.3h.01M779.2 104.3h.01M787.5 104.3h.01M795.8 104.3h.01M804.2 104.3h.01M812.5 104.3h.01M820.8 104.3h.01M829.2 104.3h.01M862.5 104.3h.01M870.8 104.3h.01M129.2 112.7h.01M137.5 112.7h.01M145.8 112.7h.01M154.2 112.7h.01M162.5 112.7h.01M170.8 112.7h.01M179.2 112.7h.01M187.5 112.7h.01M195.8 112.7h.01M204.2 112.7h.01M212.5 112.7h.01M220.8 112.7h.01M229.2 112.7h.01M237.5 112.7h.01M245.8 112.7h.01M254.2 112.7h.01M262.5 112.7h.01M454.2 112.7h.01M462.5 112.7h.01M470.8 112.7h.01M529.2 112.7h.01M545.8 112.7h.01M554.2 112.7h.01M562.5 112.7h.01M570.8 112.7h.01M579.2 112.7h.01M587.5 112.7h.01M595.8 112.7h.01M604.2 112.7h.01M612.5 112.7h.01M620.8 112.7h.01M629.2 112.7h.01M637.5 112.7h.01M645.8 112.7h.01M654.2 112.7h.01M662.5 112.7h.01M670.8 112.7h.01M679.2 112.7h.01M687.5 112.7h.01M695.8 112.7h.01M704.2 112.7h.01M712.5 112.7h.01M720.8 112.7h.01M729.2 112.7h.01M737.5 112.7h.01M745.8 112.7h.01M754.2 112.7h.01M762.5 112.7h.01M770.8 112.7h.01M779.2 112.7h.01M787.5 112.7h.01M795.8 112.7h.01M812.5 112.7h.01M820.8 112.7h.01M829.2 112.7h.01M862.5 112.7h.01M137.5 121.0h.01M145.8 121.0h.01M154.2 121.0h.01M162.5 121.0h.01M170.8 121.0h.01M179.2 121.0h.01M187.5 121.0h.01M195.8 121.0h.01M204.2 121.0h.01M212.5 121.0h.01M220.8 121.0h.01M229.2 121.0h.01M237.5 121.0h.01M245.8 121.0h.01M254.2 121.0h.01M479.2 121.0h.01M487.5 121.0h.01M495.8 121.0h.01M554.2 121.0h.01M562.5 121.0h.01M579.2 121.0h.01M587.5 121.0h.01M595.8 121.0h.01M604.2 121.0h.01M612.5 121.0h.01M620.8 121.0h.01M629.2 121.0h.01M637.5 121.0h.01M645.8 121.0h.01M654.2 121.0h.01M662.5 121.0h.01M670.8 121.0h.01M679.2 121.0h.01M687.5 121.0h.01M695.8 121.0h.01M704.2 121.0h.01M712.5 121.0h.01M720.8 121.0h.01M729.2 121.0h.01M737.5 121.0h.01M745.8 121.0h.01M754.2 121.0h.01M762.5 121.0h.01M770.8 121.0h.01M779.2 121.0h.01M787.5 121.0h.01M795.8 121.0h.01M804.2 121.0h.01M829.2 121.0h.01M854.2 121.0h.01M862.5 121.0h.01M145.8 129.4h.01M154.2 129.4h.01M162.5 129.4h.01M170.8 129.4h.01M179.2 129.4h.01M187.5 129.4h.01M195.8 129.4h.01M204.2 129.4h.01M212.5 129.4h.01M220.8 129.4h.01M229.2 129.4h.01M237.5 129.4h.01M245.8 129.4h.01M254.2 129.4h.01M454.2 129.4h.01M462.5 129.4h.01M470.8 129.4h.01M479.2 129.4h.01M487.5 129.4h.01M495.8 129.4h.01M570.8 129.4h.01M579.2 129.4h.01M587.5 129.4h.01M595.8 129.4h.01M604.2 129.4h.01M612.5 129.4h.01M620.8 129.4h.01M629.2 129.4h.01M637.5 129.4h.01M645.8 129.4h.01M654.2 129.4h.01M662.5 129.4h.01M670.8 129.4h.01M679.2 129.4h.01M687.5 129.4h.01M695.8 129.4h.01M704.2 129.4h.01M712.5 129.4h.01M720.8 129.4h.01M729.2 129.4h.01M737.5 129.4h.01M745.8 129.4h.01M754.2 129.4h.01M762.5 129.4h.01M770.8 129.4h.01M779.2 129.4h.01M787.5 129.4h.01M795.8 129.4h.01M804.2 129.4h.01M837.5 129.4h.01M154.2 137.7h.01M162.5 137.7h.01M170.8 137.7h.01M179.2 137.7h.01M187.5 137.7h.01M195.8 137.7h.01M204.2 137.7h.01M212.5 137.7h.01M220.8 137.7h.01M229.2 137.7h.01M237.5 137.7h.01M245.8 137.7h.01M445.8 137.7h.01M454.2 137.7h.01M462.5 137.7h.01M470.8 137.7h.01M479.2 137.7h.01M487.5 137.7h.01M495.8 137.7h.01M504.2 137.7h.01M512.5 137.7h.01M520.8 137.7h.01M529.2 137.7h.01M537.5 137.7h.01M545.8 137.7h.01M554.2 137.7h.01M570.8 137.7h.01M579.2 137.7h.01M587.5 137.7h.01M595.8 137.7h.01M604.2 137.7h.01M612.5 137.7h.01M620.8 137.7h.01M629.2 137.7h.01M637.5 137.7h.01M645.8 137.7h.01M654.2 137.7h.01M662.5 137.7h.01M670.8 137.7h.01M679.2 137.7h.01M687.5 137.7h.01M695.8 137.7h.01M704.2 137.7h.01M712.5 137.7h.01M720.8 137.7h.01M729.2 137.7h.01M737.5 137.7h.01M745.8 137.7h.01M754.2 137.7h.01M762.5 137.7h.01M770.8 137.7h.01M779.2 137.7h.01M787.5 137.7h.01M795.8 137.7h.01M804.2 137.7h.01M170.8 146.1h.01M179.2 146.1h.01M187.5 146.1h.01M195.8 146.1h.01M245.8 146.1h.01M437.5 146.1h.01M445.8 146.1h.01M454.2 146.1h.01M462.5 146.1h.01M470.8 146.1h.01M479.2 146.1h.01M487.5 146.1h.01M495.8 146.1h.01M504.2 146.1h.01M512.5 146.1h.01M520.8 146.1h.01M529.2 146.1h.01M537.5 146.1h.01M545.8 146.1h.01M554.2 146.1h.01M562.5 146.1h.01M579.2 146.1h.01M587.5 146.1h.01M595.8 146.1h.01M604.2 146.1h.01M620.8 146.1h.01M629.2 146.1h.01M637.5 146.1h.01M645.8 146.1h.01M654.2 146.1h.01M662.5 146.1h.01M670.8 146.1h.01M679.2 146.1h.01M687.5 146.1h.01M695.8 146.1h.01M704.2 146.1h.01M712.5 146.1h.01M720.8 146.1h.01M729.2 146.1h.01M737.5 146.1h.01M745.8 146.1h.01M754.2 146.1h.01M762.5 146.1h.01M770.8 146.1h.01M779.2 146.1h.01M787.5 146.1h.01M795.8 146.1h.01M804.2 146.1h.01M162.5 154.4h.01M179.2 154.4h.01M187.5 154.4h.01M195.8 154.4h.01M437.5 154.4h.01M445.8 154.4h.01M454.2 154.4h.01M462.5 154.4h.01M470.8 154.4h.01M479.2 154.4h.01M487.5 154.4h.01M495.8 154.4h.01M504.2 154.4h.01M512.5 154.4h.01M520.8 154.4h.01M529.2 154.4h.01M537.5 154.4h.01M545.8 154.4h.01M554.2 154.4h.01M562.5 154.4h.01M579.2 154.4h.01M587.5 154.4h.01M595.8 154.4h.01M604.2 154.4h.01M612.5 154.4h.01M629.2 154.4h.01M662.5 154.4h.01M670.8 154.4h.01M679.2 154.4h.01M687.5 154.4h.01M695.8 154.4h.01M704.2 154.4h.01M712.5 154.4h.01M720.8 154.4h.01M729.2 154.4h.01M737.5 154.4h.01M745.8 154.4h.01M754.2 154.4h.01M762.5 154.4h.01M770.8 154.4h.01M779.2 154.4h.01M787.5 154.4h.01M795.8 154.4h.01M187.5 162.8h.01M195.8 162.8h.01M254.2 162.8h.01M429.2 162.8h.01M437.5 162.8h.01M445.8 162.8h.01M454.2 162.8h.01M462.5 162.8h.01M470.8 162.8h.01M479.2 162.8h.01M487.5 162.8h.01M495.8 162.8h.01M504.2 162.8h.01M512.5 162.8h.01M520.8 162.8h.01M529.2 162.8h.01M537.5 162.8h.01M545.8 162.8h.01M554.2 162.8h.01M562.5 162.8h.01M570.8 162.8h.01M587.5 162.8h.01M595.8 162.8h.01M604.2 162.8h.01M612.5 162.8h.01M620.8 162.8h.01M629.2 162.8h.01M670.8 162.8h.01M679.2 162.8h.01M687.5 162.8h.01M695.8 162.8h.01M704.2 162.8h.01M712.5 162.8h.01M729.2 162.8h.01M737.5 162.8h.01M745.8 162.8h.01M754.2 162.8h.01M762.5 162.8h.01M770.8 162.8h.01M779.2 162.8h.01M187.5 171.1h.01M195.8 171.1h.01M204.2 171.1h.01M220.8 171.1h.01M270.8 171.1h.01M279.2 171.1h.01M429.2 171.1h.01M437.5 171.1h.01M445.8 171.1h.01M454.2 171.1h.01M462.5 171.1h.01M470.8 171.1h.01M479.2 171.1h.01M487.5 171.1h.01M495.8 171.1h.01M504.2 171.1h.01M512.5 171.1h.01M520.8 171.1h.01M529.2 171.1h.01M537.5 171.1h.01M545.8 171.1h.01M554.2 171.1h.01M562.5 171.1h.01M570.8 171.1h.01M595.8 171.1h.01M604.2 171.1h.01M612.5 171.1h.01M620.8 171.1h.01M629.2 171.1h.01M679.2 171.1h.01M687.5 171.1h.01M695.8 171.1h.01M704.2 171.1h.01M737.5 171.1h.01M745.8 171.1h.01M754.2 171.1h.01M762.5 171.1h.01M220.8 179.5h.01M229.2 179.5h.01M429.2 179.5h.01M437.5 179.5h.01M445.8 179.5h.01M454.2 179.5h.01M462.5 179.5h.01M470.8 179.5h.01M479.2 179.5h.01M487.5 179.5h.01M495.8 179.5h.01M504.2 179.5h.01M512.5 179.5h.01M520.8 179.5h.01M529.2 179.5h.01M537.5 179.5h.01M545.8 179.5h.01M554.2 179.5h.01M562.5 179.5h.01M570.8 179.5h.01M579.2 179.5h.01M595.8 179.5h.01M604.2 179.5h.01M612.5 179.5h.01M679.2 179.5h.01M687.5 179.5h.01M745.8 179.5h.01M754.2 179.5h.01M762.5 179.5h.01M770.8 179.5h.01M812.5 179.5h.01M237.5 187.8h.01M429.2 187.8h.01M437.5 187.8h.01M445.8 187.8h.01M454.2 187.8h.01M462.5 187.8h.01M470.8 187.8h.01M479.2 187.8h.01M487.5 187.8h.01M495.8 187.8h.01M504.2 187.8h.01M512.5 187.8h.01M520.8 187.8h.01M529.2 187.8h.01M537.5 187.8h.01M545.8 187.8h.01M554.2 187.8h.01M562.5 187.8h.01M570.8 187.8h.01M579.2 187.8h.01M587.5 187.8h.01M687.5 187.8h.01M754.2 187.8h.01M762.5 187.8h.01M770.8 187.8h.01M237.5 196.2h.01M262.5 196.2h.01M270.8 196.2h.01M279.2 196.2h.01M287.5 196.2h.01M295.8 196.2h.01M437.5 196.2h.01M445.8 196.2h.01M454.2 196.2h.01M462.5 196.2h.01M470.8 196.2h.01M479.2 196.2h.01M487.5 196.2h.01M495.8 196.2h.01M504.2 196.2h.01M512.5 196.2h.01M520.8 196.2h.01M529.2 196.2h.01M537.5 196.2h.01M545.8 196.2h.01M554.2 196.2h.01M562.5 196.2h.01M570.8 196.2h.01M579.2 196.2h.01M587.5 196.2h.01M595.8 196.2h.01M604.2 196.2h.01M612.5 196.2h.01M687.5 196.2h.01M820.8 196.2h.01M262.5 204.5h.01M270.8 204.5h.01M279.2 204.5h.01M287.5 204.5h.01M295.8 204.5h.01M304.2 204.5h.01M445.8 204.5h.01M454.2 204.5h.01M462.5 204.5h.01M470.8 204.5h.01M479.2 204.5h.01M487.5 204.5h.01M495.8 204.5h.01M504.2 204.5h.01M512.5 204.5h.01M520.8 204.5h.01M529.2 204.5h.01M537.5 204.5h.01M545.8 204.5h.01M554.2 204.5h.01M562.5 204.5h.01M570.8 204.5h.01M579.2 204.5h.01M587.5 204.5h.01M595.8 204.5h.01M604.2 204.5h.01M695.8 204.5h.01M754.2 204.5h.01M262.5 212.9h.01M270.8 212.9h.01M279.2 212.9h.01M287.5 212.9h.01M295.8 212.9h.01M304.2 212.9h.01M312.5 212.9h.01M320.8 212.9h.01M329.2 212.9h.01M504.2 212.9h.01M512.5 212.9h.01M520.8 212.9h.01M529.2 212.9h.01M537.5 212.9h.01M545.8 212.9h.01M554.2 212.9h.01M562.5 212.9h.01M570.8 212.9h.01M579.2 212.9h.01M587.5 212.9h.01M595.8 212.9h.01M745.8 212.9h.01M754.2 212.9h.01M787.5 212.9h.01M795.8 212.9h.01M254.2 221.2h.01M262.5 221.2h.01M270.8 221.2h.01M279.2 221.2h.01M287.5 221.2h.01M295.8 221.2h.01M304.2 221.2h.01M312.5 221.2h.01M320.8 221.2h.01M329.2 221.2h.01M504.2 221.2h.01M512.5 221.2h.01M520.8 221.2h.01M529.2 221.2h.01M537.5 221.2h.01M545.8 221.2h.01M554.2 221.2h.01M562.5 221.2h.01M570.8 221.2h.01M579.2 221.2h.01M587.5 221.2h.01M754.2 221.2h.01M779.2 221.2h.01M787.5 221.2h.01M795.8 221.2h.01M254.2 229.6h.01M262.5 229.6h.01M270.8 229.6h.01M279.2 229.6h.01M287.5 229.6h.01M295.8 229.6h.01M304.2 229.6h.01M312.5 229.6h.01M320.8 229.6h.01M329.2 229.6h.01M337.5 229.6h.01M345.8 229.6h.01M504.2 229.6h.01M512.5 229.6h.01M520.8 229.6h.01M529.2 229.6h.01M537.5 229.6h.01M545.8 229.6h.01M554.2 229.6h.01M562.5 229.6h.01M570.8 229.6h.01M579.2 229.6h.01M754.2 229.6h.01M762.5 229.6h.01M779.2 229.6h.01M787.5 229.6h.01M845.8 229.6h.01M854.2 229.6h.01M862.5 229.6h.01M254.2 237.9h.01M262.5 237.9h.01M270.8 237.9h.01M279.2 237.9h.01M287.5 237.9h.01M295.8 237.9h.01M304.2 237.9h.01M312.5 237.9h.01M320.8 237.9h.01M329.2 237.9h.01M337.5 237.9h.01M345.8 237.9h.01M354.2 237.9h.01M362.5 237.9h.01M370.8 237.9h.01M512.5 237.9h.01M520.8 237.9h.01M529.2 237.9h.01M537.5 237.9h.01M545.8 237.9h.01M554.2 237.9h.01M562.5 237.9h.01M570.8 237.9h.01M579.2 237.9h.01M762.5 237.9h.01M804.2 237.9h.01M862.5 237.9h.01M870.8 237.9h.01M879.2 237.9h.01M254.2 246.3h.01M262.5 246.3h.01M270.8 246.3h.01M279.2 246.3h.01M287.5 246.3h.01M295.8 246.3h.01M304.2 246.3h.01M312.5 246.3h.01M320.8 246.3h.01M329.2 246.3h.01M337.5 246.3h.01M345.8 246.3h.01M354.2 246.3h.01M362.5 246.3h.01M370.8 246.3h.01M512.5 246.3h.01M520.8 246.3h.01M529.2 246.3h.01M537.5 246.3h.01M545.8 246.3h.01M554.2 246.3h.01M562.5 246.3h.01M570.8 246.3h.01M579.2 246.3h.01M787.5 246.3h.01M862.5 246.3h.01M262.5 254.6h.01M270.8 254.6h.01M279.2 254.6h.01M287.5 254.6h.01M295.8 254.6h.01M304.2 254.6h.01M312.5 254.6h.01M320.8 254.6h.01M329.2 254.6h.01M337.5 254.6h.01M345.8 254.6h.01M354.2 254.6h.01M362.5 254.6h.01M512.5 254.6h.01M520.8 254.6h.01M529.2 254.6h.01M537.5 254.6h.01M545.8 254.6h.01M554.2 254.6h.01M562.5 254.6h.01M570.8 254.6h.01M579.2 254.6h.01M262.5 263.0h.01M270.8 263.0h.01M279.2 263.0h.01M287.5 263.0h.01M295.8 263.0h.01M304.2 263.0h.01M312.5 263.0h.01M320.8 263.0h.01M329.2 263.0h.01M337.5 263.0h.01M345.8 263.0h.01M354.2 263.0h.01M362.5 263.0h.01M512.5 263.0h.01M520.8 263.0h.01M529.2 263.0h.01M537.5 263.0h.01M545.8 263.0h.01M554.2 263.0h.01M562.5 263.0h.01M570.8 263.0h.01M579.2 263.0h.01M837.5 263.0h.01M845.8 263.0h.01M870.8 263.0h.01M279.2 271.3h.01M287.5 271.3h.01M295.8 271.3h.01M304.2 271.3h.01M312.5 271.3h.01M320.8 271.3h.01M329.2 271.3h.01M337.5 271.3h.01M345.8 271.3h.01M354.2 271.3h.01M362.5 271.3h.01M512.5 271.3h.01M520.8 271.3h.01M529.2 271.3h.01M537.5 271.3h.01M545.8 271.3h.01M554.2 271.3h.01M562.5 271.3h.01M570.8 271.3h.01M595.8 271.3h.01M604.2 271.3h.01M820.8 271.3h.01M829.2 271.3h.01M837.5 271.3h.01M845.8 271.3h.01M854.2 271.3h.01M862.5 271.3h.01M870.8 271.3h.01M279.2 279.7h.01M287.5 279.7h.01M295.8 279.7h.01M304.2 279.7h.01M312.5 279.7h.01M320.8 279.7h.01M329.2 279.7h.01M337.5 279.7h.01M345.8 279.7h.01M354.2 279.7h.01M512.5 279.7h.01M520.8 279.7h.01M529.2 279.7h.01M537.5 279.7h.01M545.8 279.7h.01M554.2 279.7h.01M562.5 279.7h.01M570.8 279.7h.01M595.8 279.7h.01M604.2 279.7h.01M804.2 279.7h.01M812.5 279.7h.01M820.8 279.7h.01M829.2 279.7h.01M837.5 279.7h.01M845.8 279.7h.01M854.2 279.7h.01M862.5 279.7h.01M870.8 279.7h.01M879.2 279.7h.01M279.2 288.0h.01M287.5 288.0h.01M295.8 288.0h.01M304.2 288.0h.01M312.5 288.0h.01M320.8 288.0h.01M329.2 288.0h.01M337.5 288.0h.01M345.8 288.0h.01M520.8 288.0h.01M529.2 288.0h.01M537.5 288.0h.01M545.8 288.0h.01M554.2 288.0h.01M562.5 288.0h.01M595.8 288.0h.01M604.2 288.0h.01M795.8 288.0h.01M804.2 288.0h.01M812.5 288.0h.01M820.8 288.0h.01M829.2 288.0h.01M837.5 288.0h.01M845.8 288.0h.01M854.2 288.0h.01M862.5 288.0h.01M870.8 288.0h.01M879.2 288.0h.01M887.5 288.0h.01M279.2 296.3h.01M287.5 296.3h.01M295.8 296.3h.01M304.2 296.3h.01M312.5 296.3h.01M320.8 296.3h.01M329.2 296.3h.01M520.8 296.3h.01M529.2 296.3h.01M537.5 296.3h.01M545.8 296.3h.01M554.2 296.3h.01M562.5 296.3h.01M795.8 296.3h.01M804.2 296.3h.01M812.5 296.3h.01M820.8 296.3h.01M829.2 296.3h.01M837.5 296.3h.01M845.8 296.3h.01M854.2 296.3h.01M862.5 296.3h.01M870.8 296.3h.01M879.2 296.3h.01M887.5 296.3h.01M895.8 296.3h.01M279.2 304.7h.01M287.5 304.7h.01M295.8 304.7h.01M304.2 304.7h.01M312.5 304.7h.01M320.8 304.7h.01M329.2 304.7h.01M520.8 304.7h.01M529.2 304.7h.01M537.5 304.7h.01M545.8 304.7h.01M554.2 304.7h.01M795.8 304.7h.01M804.2 304.7h.01M812.5 304.7h.01M820.8 304.7h.01M829.2 304.7h.01M837.5 304.7h.01M845.8 304.7h.01M854.2 304.7h.01M862.5 304.7h.01M870.8 304.7h.01M879.2 304.7h.01M887.5 304.7h.01M895.8 304.7h.01M279.2 313.0h.01M287.5 313.0h.01M295.8 313.0h.01M304.2 313.0h.01M312.5 313.0h.01M320.8 313.0h.01M529.2 313.0h.01M537.5 313.0h.01M545.8 313.0h.01M795.8 313.0h.01M804.2 313.0h.01M812.5 313.0h.01M820.8 313.0h.01M845.8 313.0h.01M854.2 313.0h.01M862.5 313.0h.01M870.8 313.0h.01M879.2 313.0h.01M887.5 313.0h.01M270.8 321.4h.01M279.2 321.4h.01M287.5 321.4h.01M295.8 321.4h.01M304.2 321.4h.01M312.5 321.4h.01M862.5 321.4h.01M870.8 321.4h.01M879.2 321.4h.01M887.5 321.4h.01M954.2 321.4h.01M270.8 329.7h.01M279.2 329.7h.01M287.5 329.7h.01M295.8 329.7h.01M304.2 329.7h.01M879.2 329.7h.01M962.5 329.7h.01M270.8 338.1h.01M279.2 338.1h.01M287.5 338.1h.01M879.2 338.1h.01M954.2 338.1h.01M270.8 346.4h.01M279.2 346.4h.01M287.5 346.4h.01M937.5 346.4h.01M945.8 346.4h.01M270.8 354.8h.01M279.2 354.8h.01M270.8 363.1h.01M279.2 363.1h.01M279.2 371.5h.01"/>
+
+              <g class="spots">
+                <g class="spot" transform="translate(50.8 268.5)"><circle class="spot-ring" r="4"/><circle class="spot-dot" r="3.5"/><text x="9" y="4">Bora Bora</text></g>
+                <g class="spot" transform="translate(892.5 316.9)"><circle class="spot-ring" r="4"/><circle class="spot-dot" r="3.5"/><text x="-9" y="4" text-anchor="end">Bondi Beach</text></g>
+                <g class="spot" transform="translate(760.8 185.3)"><circle class="spot-ring" r="4"/><circle class="spot-dot" r="3.5"/><text x="9" y="4">Angkor Wat</text></g>
+                <g class="spot" transform="translate(680.3 134.7)"><circle class="spot-ring" r="4"/><circle class="spot-dot" r="3.5"/><text x="-9" y="16" text-anchor="end">Golden Temple</text></g>
+              </g>
+
+              <path id="routeLeg1" class="route-leg" d="M266.7 109.4Q387 15 507 106"/>
+              <path class="route-base" d="M266.7 109.4Q387 15 507 106Q680 10 849.4 125.2"/>
+              <path id="routeGlow" class="route-glow" d="M266.7 109.4Q387 15 507 106Q680 10 849.4 125.2"/>
+              <path id="routeProgress" class="route-progress" d="M266.7 109.4Q387 15 507 106Q680 10 849.4 125.2"/>
+
+              <g class="pin" transform="translate(266.7 109.4)">
+                <circle class="pin-pulse" r="12"/>
+                <g class="pin-body"><circle class="pin-dot" r="12"/><text class="pin-num" y="4.6" text-anchor="middle">1</text></g>
+                <g transform="translate(0 40)"><g class="pin-label"><rect x="-42" y="-13" width="84" height="26" rx="13"/><text y="4.6" text-anchor="middle">New York</text></g></g>
+              </g>
+              <g class="pin" transform="translate(507 106)">
+                <circle class="pin-pulse" r="12"/>
+                <g class="pin-body"><circle class="pin-dot" r="12"/><text class="pin-num" y="4.6" text-anchor="middle">2</text></g>
+                <g transform="translate(0 40)"><g class="pin-label"><rect x="-30" y="-13" width="60" height="26" rx="13"/><text y="4.6" text-anchor="middle">Rome</text></g></g>
+              </g>
+              <g class="pin" transform="translate(849.4 125.2)">
+                <circle class="pin-pulse" r="12"/>
+                <g class="pin-body"><circle class="pin-dot" r="12"/><text class="pin-num" y="4.6" text-anchor="middle">3</text></g>
+                <g transform="translate(0 40)"><g class="pin-label"><rect x="-32" y="-13" width="64" height="26" rx="13"/><text y="4.6" text-anchor="middle">Kyoto</text></g></g>
+              </g>
+
+              <g id="mapPlane" class="map-plane" transform="translate(266.7 109.4)">
+                <circle class="plane-halo" r="20"/>
+                <use href="#ic-plane" x="-16" y="-16" width="32" height="32"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <ol class="steps" id="steps">
+          <li class="step is-active">
+            <div class="step-top">
+              <span class="step-icon"><svg class="ico"><use href="#ic-search"/></svg></span>
+              <span class="step-num">Step 01</span>
+              <span class="step-done"><svg class="ico"><use href="#ic-check"/></svg>Done</span>
+            </div>
+            <h3>Find your place</h3>
+            <p>Search beaches, temples or a country to get recommendations.</p>
+            <p class="step-meta"><svg class="ico" aria-hidden="true"><use href="#ic-clock"/></svg>Takes about 2 minutes</p>
+          </li>
+          <li class="step">
+            <div class="step-top">
+              <span class="step-icon"><svg class="ico"><use href="#ic-plan"/></svg></span>
+              <span class="step-num">Step 02</span>
+              <span class="step-done"><svg class="ico"><use href="#ic-check"/></svg>Done</span>
+            </div>
+            <h3>Get a tailored plan</h3>
+            <p>Tell us your dates and budget, and a consultant builds your trip.</p>
+            <p class="step-meta"><svg class="ico" aria-hidden="true"><use href="#ic-calendar"/></svg>Your plan within 24 hours</p>
+          </li>
+          <li class="step">
+            <div class="step-top">
+              <span class="step-icon"><svg class="ico"><use href="#ic-suitcase"/></svg></span>
+              <span class="step-num">Step 03</span>
+              <span class="step-done"><svg class="ico"><use href="#ic-check"/></svg>Done</span>
+            </div>
+            <h3>Pack your bags</h3>
+            <p>Flights, hotels and tours confirmed. All that’s left is the fun part.</p>
+            <p class="step-meta"><svg class="ico" aria-hidden="true"><use href="#ic-pin"/></svg>Tickets sent to your inbox</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="About">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-copy">
+            <span class="eyebrow eyebrow-dark">About us</span>
+            <h2 class="section-title">Travel made easy, affordable and unforgettable</h2>
+            <p class="lead">
+              At TravelPro, our mission is simple: to make travel easy, affordable,
+              and unforgettable for everyone. We partner with trusted airlines, hotels,
+              and tour guides to bring you an experience tailored just for you.
+            </p>
+            <ul class="checklist">
+              <li><svg class="ico" aria-hidden="true"><use href="#ic-check"/></svg>Trusted airline, hotel and guide partners</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#ic-check"/></svg>Itineraries built around your style and budget</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#ic-check"/></svg>Clear prices with no hidden fees</li>
+            </ul>
+          </div>
+          <div class="about-media">
+            <div class="about-img about-img--a thumb-city"><img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=700&q=60" alt="Venice canal" loading="lazy"></div>
+            <div class="about-img about-img--b thumb-temple"><img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=60" alt="Angkor Wat" loading="lazy"></div>
+            <div class="about-badge"><strong>10+</strong><span>years planning trips</span></div>
+          </div>
+        </div>
+
+        <h3 class="subtitle">Our Team</h3>
+        <div class="team">
+          <article class="person">
+            <div class="avatar avatar--blue" aria-hidden="true">JD</div>
+            <h4>John Doe</h4>
+            <span class="role">CTO</span>
+            <p>John leads our technology team, ensuring our platform runs smoothly and securely.</p>
+          </article>
+          <article class="person">
+            <div class="avatar avatar--coral" aria-hidden="true">JS</div>
+            <h4>Jessica Smith</h4>
+            <span class="role">CEO</span>
+            <p>Jessica oversees strategy and partnerships, helping us grow and serve more travelers worldwide.</p>
+          </article>
+          <article class="person">
+            <div class="avatar avatar--teal" aria-hidden="true">MT</div>
+            <h4>Mike Tyson</h4>
+            <span class="role">Team Lead</span>
+            <p>Mike manages our travel consultants, making sure every customer has the best support possible.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="stories">
+      <div class="container">
+        <div class="section-head section-head--center">
+          <div>
+            <span class="eyebrow eyebrow-dark">Traveller stories</span>
+            <h2 class="section-title">Loved by travellers <em>worldwide</em></h2>
+          </div>
+        </div>
+        <div class="story-grid">
+          <figure class="story">
+            <div class="stars" aria-label="5 out of 5"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></div>
+            <blockquote>“The Kyoto itinerary was perfect. Every temple and tea house was timed so we missed the crowds.”</blockquote>
+            <figcaption><span class="avatar avatar--sm avatar--blue" aria-hidden="true">HL</span><span><strong>Hannah &amp; Leo</strong><small>Kyoto, Japan</small></span></figcaption>
+          </figure>
+          <figure class="story story--featured">
+            <div class="stars" aria-label="5 out of 5"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></div>
+            <blockquote>“We booked Bora Bora in one afternoon, and the overwater villa was even better than the photos.”</blockquote>
+            <figcaption><span class="avatar avatar--sm avatar--coral" aria-hidden="true">DR</span><span><strong>Daniel R.</strong><small>Bora Bora</small></span></figcaption>
+          </figure>
+          <figure class="story">
+            <div class="stars" aria-label="5 out of 5"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></div>
+            <blockquote>“When our flight to Rome was cancelled, they rebooked us within the hour. That’s real support.”</blockquote>
+            <figcaption><span class="avatar avatar--sm avatar--teal" aria-hidden="true">PS</span><span><strong>Priya S.</strong><small>Rome, Italy</small></span></figcaption>
+          </figure>
+        </div>
+        <p class="stories-note">Sample reviews for demo purposes.</p>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+      <div class="container">
+        <div class="newsletter-card">
+          <div class="newsletter-copy">
+            <h2>Get exclusive travel deals</h2>
+            <p>One email a month with our best offers and destination ideas. No spam.</p>
+          </div>
+          <form class="newsletter-form" id="newsletterForm">
+            <label for="newsletterEmail" class="sr-only">Email address</label>
+            <input type="email" id="newsletterEmail" placeholder="Your email address" required>
+            <button type="submit" class="btn">Subscribe <svg class="ico btn-plane" aria-hidden="true"><use href="#ic-plane"/></svg></button>
+            <p class="form-note form-note--light" id="newsletterNote" role="status"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="Contact">
+      <div class="container contact-grid">
+        <div class="contact-copy">
+          <span class="eyebrow">Contact</span>
+          <h2 class="section-title light">Let's plan your trip</h2>
+          <p>Tell us where you want to go and our travel consultants will get back to you shortly.</p>
+          <ul class="contact-list">
+            <li><span class="contact-icon"><svg class="ico"><use href="#ic-mail"/></svg></span><span><small>Email us</small>hello@travelpro.com</span></li>
+            <li><span class="contact-icon"><svg class="ico"><use href="#ic-phone"/></svg></span><span><small>Call us</small>+1 (555) 019-2048</span></li>
+            <li><span class="contact-icon"><svg class="ico"><use href="#ic-clock"/></svg></span><span><small>Office hours</small>Mon–Fri, 9am–6pm</span></li>
+          </ul>
+        </div>
+
+        <form id="contactForm">
+          <h3 class="form-title">Send us a message</h3>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Enter your name" required>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter your email" required>
+
+          <label for="message">Message</label>
+          <textarea id="message" rows="5" placeholder="Write your message" required></textarea>
+
+          <button type="submit" class="btn btn-large">Submit <svg class="ico btn-plane" aria-hidden="true"><use href="#ic-plane"/></svg></button>
+          <p class="form-note" id="formNote" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#Home"><span class="brand-mark" aria-hidden="true"><svg class="ico"><use href="#ic-plane"/></svg></span>Travel<span class="brand-pro">Pro</span></a>
+        <p>Discover beaches, temples and cities around the world, planned by people who love to travel.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Explore</h3>
+        <button type="button" data-query="beach">Beaches</button>
+        <button type="button" data-query="temple">Temples</button>
+        <button type="button" data-query="japan">Japan</button>
+        <button type="button" data-query="italy">Italy</button>
+      </div>
+      <div class="footer-col">
+        <h3>Company</h3>
+        <a href="#About">About us</a>
+        <a href="#Destinations">Destinations</a>
+        <a href="#How">How it works</a>
+        <a href="#Contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h3>Get in touch</h3>
+        <p>hello@travelpro.com</p>
+        <p>+1 (555) 019-2048</p>
       </div>
     </div>
-  </div>
+    <div class="container footer-bottom">
+      <p>&copy; <span id="year"></span> TravelPro. All rights reserved.</p>
+    </div>
+  </footer>
 
-  <!-- Contact Section -->
-  <div class="contact" id="Contact">
-    <form>
-      <label for="name">Name</label>
-      <input type="text" id="name" placeholder="Enter your name">
-
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Enter your email">
-
-      <label for="message">Message</label>
-      <textarea id="message" cols="30" rows="5" placeholder="Write your message"></textarea>
-
-      <button type="submit">Submit</button>
-    </form>
-  </div>
   <script src="travel_recommendation.js"></script>
 </body>
 </html>
